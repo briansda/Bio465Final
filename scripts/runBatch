@@ -1,0 +1,1 @@
+Rscript --vanilla BatchAdjustComBat.R ~/fsl_groups/fslg_Bio465_BDAG/combined/geneExpressionCombined ~/fsl_groups/fslg_Bio465_BDAG/scripts/All2.txt ~/fsl_groups/fslg_Bio465_BDAG/geneExpression2.txt

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for datasetId in ~/fsl_groups/fslg_piccololab/compute/Biomarker_Benchmark/Biomarker_Benchmark/*
+do
+  for dataType in scan upc 
+    do  
+	    datasetId=$(basename $datasetId)
+		datasetId=${datasetId/\//}
+		python fixHeader.py ~/fsl_groups/fslg_piccololab/compute/Biomarker_Benchmark/Biomarker_Benchmark/$datasetId/${datasetId}_GeneExpression.${dataType}.txt
+	 done
+done

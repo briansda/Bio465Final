@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for datasetId in ~/fsl_groups/fslg_Bio465_BDAG/geneExpression/*
+do
+	datasetId=$(basename $datasetId)
+	datasetId=${datasetId/\//}
+	for sampleId in ~/fsl_groups/fslg_Bio465_BDAG/geneExpression/$datasetId/unprocessed/*
+	do
+		sampleId=$(basename $sampleId)
+		python fixFileNames.py $sampleId $datasetId
+	done
+done

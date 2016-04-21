@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for datasetId in GSE21653 GSE6008 GSE7023 GSE3218
+do
+	python BuildMatrixFile.py "/fslhome/briansd/fsl_groups/fslg_Bio465_BDAG/geneExpression/$datasetId/processed/*" "/fslhome/briansd/fsl_groups/fslg_Bio465_BDAG/combined/${datasetId}"
+done
+
+python BuildMatrixFile.py "/fslhome/briansd/fsl_groups/fslg_Bio465_BDAG/geneExpression/*/processed/*" "/fslhome/briansd/fsl_groups/fslg_Bio465_BDAG/combined/geneExpressionCombined"
+

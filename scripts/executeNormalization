@@ -1,0 +1,50 @@
+#!/bin/bash
+module load curl/7.43.0
+
+#/fslhome/brians/Rscript --vanilla installSoftware.r
+#/fslhome/briansd/Rscript --vanilla installBrainArray.r
+#return
+function normalize {
+  datasetId=$1
+  f=$2
+  brainArrayPackage=$3
+
+  sampleId=$(basename $f)
+  sampleId=${sampleId/\.CEL/}
+    
+  scanOutputFilePath="/fslhome/aguyer/fsl_groups/fslg_Bio465_BDAG/geneExpression/${datasetId}/processed/${sampleId}"
+
+  if [ ! -f $scanOutputFilePath ]
+  then
+    sbatch ./scanNormalization $sampleId $datasetId $brainArrayPackage
+  fi
+}
+
+#U133plus2
+for datasetId in GSE63885 GSE21653 GSE36668 GSE7023
+do
+  for f in /fslhome/aguyer/fsl_groups/fslg_Bio465_BDAG/geneExpression/$datasetId/unprocessed/*
+  do
+	normalize $datasetId $f hgu133plus2hsensgprobe
+  done
+done
+
+#U133a
+for patientId in GSM72460 GSM72407 GSM72444 GSM72423 GSM72483 GSM72394 GSM72481 GSM72455 GSM72397 GSM72445 GSM72428 GSM72425 GSM72418 GSM72468 GSM72408 GSM72450 GSM72461 GSM72413 GSM72412 GSM72417 GSM72464 GSM72442 GSM72484 GSM72465 GSM72429 GSM72436 GSM72399 GSM72476 GSM72438 GSM72486 GSM72432 GSM72435 GSM72441 GSM72406 GSM72458 GSM72424 GSM72466 GSM72475 GSM72496 GSM72499 GSM72495 GSM72498 GSM72497 GSM72416 GSM72431 GSM72477 GSM72469 GSM72474 GSM72430 GSM72447 GSM72419 GSM72491 GSM72478 GSM72488 GSM72448 GSM72470 GSM72414 GSM72490 GSM72487 GSM72409 GSM72443 GSM72415 GSM72437 GSM72400 GSM72457 GSM72467 GSM72439 GSM72473 GSM72398 GSM72456 GSM72404 GSM72454 GSM72453 GSM72485 GSM72452 GSM72405 GSM72462 GSM72446 GSM72459 GSM72480 GSM72493 GSM72422 GSM72451 GSM72463 GSM72449 GSM72482 GSM72494 GSM72427 GSM72479 GSM72489 GSM72440 GSM72492 GSM72426 GSM72403
+do
+  for f in /fslhome/aguyer/fsl_groups/fslg_Bio465_BDAG/geneExpression/GSE3218/unprocessed/${patientId}.CEL
+  do
+   datasetId=GSE3218
+   normalize $datasetId $f hgu133ahsensgprobe
+  done
+done
+
+
+#133a for second file
+for datasetId in GSE6008
+do
+  for f in /fslhome/aguyer/fsl_groups/fslg_Bio465_BDAG/geneExpression/$datasetId/unprocessed/*
+  do
+   normalize $datasetId $f hgu133ahsensgprobe
+  done
+done
